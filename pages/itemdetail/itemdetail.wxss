@@ -1,0 +1,34 @@
+/* pages/itemdetail/itemdetail.wxss */
+
+.image {
+  width: 90%;
+  height: 300rpx;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  align-content: flex-start;
+  margin-top: 40rpx;
+  width: 630rpx;
+  margin-bottom: 20rpx;
+}
+
+.item text {
+  color: black;
+  font-size: 14px;
+}
+
+.item .content {
+  color: black;
+  font-size: 14px;
+  border-bottom: thin solid #aaa;
+  width: 300rpx;
+  height: 30rpx;
+  margin-left: 60rpx;
+}
+.btn {
+  margin-top: 30rpx;
+  font-size: 14px;
+}

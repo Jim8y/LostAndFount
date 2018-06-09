@@ -1,0 +1,30 @@
+<!--pages/postlost.wxml-->
+<view class="container">
+  <view class="item" style='margin-top:100rpx;'>
+    <text>丢失时间</text>
+    <input name="lostTime" />
+    <image src="/images/Date.png" />
+  </view>
+
+  <view class="item">
+    <text>丢失地点</text>
+    <input name="lostTime" />
+    <image src="/images/Locat.png" data-type='location' bindtap='onTap'/>
+  </view>
+
+  <view class="item">
+    <text>联系方式</text>
+    <input name="lostTime" />
+  </view>
+
+  <view class="item">
+    <text>物品类别</text>
+    <input name="lostTime" />
+    <text style='margin-left:20rpx;' data-type='select' bindtap='onTap'>选择</text>
+  </view>
+  <view class='item-image'>
+    <text>上传图片</text>
+    <image src='{{imgUrl}}' data-type='pickPic' bindtap='onTap'/>
+  </view>
+  <button class='btn'  data-type='post' bindtap='onTap'>我要发布</button>
+</view>

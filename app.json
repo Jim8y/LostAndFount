@@ -1,18 +1,15 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
-    "pages/warn/index",
-    "pages/scanresult/index",
-    "pages/billing/index",
-    "pages/my/index",
-    "pages/wallet/index",
-    "pages/charge/index",
-    "pages/logs/logs"
+    "pages/postlost/postlost",
+    "pages/postfound/postfound",
+    "pages/itemdetail/itemdetail",
+    "pages/mine/mine"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#b9dd08",
-    "navigationBarTitleText": "ofo 共享单车",
-    "navigationBarTextStyle":"black"
+    "navigationBarTitleText": "失物招领",
+    "navigationBarTextStyle": "black"
   }
 }

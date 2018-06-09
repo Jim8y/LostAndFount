@@ -8,7 +8,7 @@ function formatTime(date) {
   var second = date.getSeconds()
 
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
 function formatNumber(n) {
@@ -16,6 +16,21 @@ function formatNumber(n) {
   return n[1] ? n : '0' + n
 }
 
+const TYPE = [
+  '衣服',
+  '手表',
+  '雨伞',
+  '书',
+  '文具',
+  '钱包',
+  '电子产品',
+  '卡',
+  '钥匙',
+  '运动器材',
+  '其他'
+]
+
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  TYPE: TYPE
 }
