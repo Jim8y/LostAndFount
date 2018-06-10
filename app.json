@@ -4,11 +4,12 @@
     "pages/postlost/postlost",
     "pages/postfound/postfound",
     "pages/itemdetail/itemdetail",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/lists/lists"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#b9dd08",
+    "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "失物招领",
     "navigationBarTextStyle": "black"
   }

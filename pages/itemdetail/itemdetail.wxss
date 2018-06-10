@@ -11,7 +11,6 @@
   align-items: flex-end;
   align-content: flex-start;
   margin-top: 40rpx;
-  width: 630rpx;
   margin-bottom: 20rpx;
 }
 
@@ -24,8 +23,8 @@
   color: black;
   font-size: 14px;
   border-bottom: thin solid #aaa;
-  width: 300rpx;
-  height: 30rpx;
+  width: 500rpx;
+  height: 55rpx;
   margin-left: 60rpx;
 }
 .btn {

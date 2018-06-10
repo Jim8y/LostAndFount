@@ -34,7 +34,7 @@
 }
 
 .block {
-  width: 680rpx;
+  width: 750rpx;
   display: block;
   flex-direction: column;
   margin-top: 1rpx;
@@ -48,12 +48,15 @@
   align-items: center;
   height: 100rpx;
   justify-content: space-between;
+  background-color: white;
+  margin-top: 1rpx;
 }
 
 .content .left {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-left: 30rpx;
 }
 
 .left image {
@@ -82,4 +85,5 @@
 .right image {
   width: 40rpx;
   height: 40rpx;
+  margin-right: 10rpx;
 }

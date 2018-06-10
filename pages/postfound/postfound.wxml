@@ -3,24 +3,24 @@
   <view class="container">
     <view class="item" style='margin-top:100rpx;'>
       <text>拾到时间</text>
-      <input name="lostTime" value="{{currTime}}" />
+      <input name="pickTime" value="{{currTime}}" />
       <image src="/images/Date.png" />
     </view>
 
     <view class="item">
       <text>拾到地点</text>
-      <input name="lostTime" value='{{location}}' />
+      <input name="pickLocation" value='{{location}}' />
       <image src="/images/Locat.png" bindtap='getLocation' />
     </view>
 
     <view class="item">
       <text>领取地点</text>
-      <input name="pickLocation" />
+      <input name="takeLocation" value='岳麓山下小树林' />
     </view>
 
     <view class="item">
       <text>联系方式</text>
-      <input name="contact" />
+      <input name="contact" value='1100110001110' />
     </view>
 
     <view class="item">
@@ -34,6 +34,6 @@
       <text>上传图片</text>
       <image src='{{imgUrl}}' data-type='pickPic' bindtap='onTap' />
     </view>
-    <button class='btn' form-type="submit" bindtap='onTap'>我要发布</button>
+    <button class='btn' form-type="submit">我要发布</button>
   </view>
 </form>

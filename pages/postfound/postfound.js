@@ -2,6 +2,7 @@
 const Http = require('../../utils/http.js');
 const util = require('../../utils/util.js')
 const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
+var app = getApp()
 var qqmapsdk;
 Page({
 
@@ -23,7 +24,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.getTime();
     this.initMap();
     this.getLocation();
@@ -36,49 +37,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
 
@@ -86,19 +87,7 @@ Page({
     console.log(e.currentTarget.dataset.type)
     switch (e.currentTarget.dataset.type) {
       case 'pickPic':
-        var that = this
-        wx.chooseImage({
-          count: 1, // 默认9  
-          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
-          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-          success: function (res) {
-            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
-            var tempFilePaths = res.tempFilePaths
-            that.setData({
-              imgUrl: tempFilePaths
-            })
-          }
-        })
+        this.choiseImage();
         break;
       case 'select':
         break;
@@ -117,7 +106,7 @@ Page({
   async addLost(res2) {
     // console.log(Http)
 
-    let res = await Http.getLost();
+    let res = await Http.getLosts();
     console.log(res2)
     console.log(res)
     let that = this;
@@ -142,7 +131,7 @@ Page({
         latitude: res.latitude,
         longitude: res.longitude
       },
-      success: function (addressRes) {
+      success: function(addressRes) {
         var address = addressRes.result.formatted_addresses.recommend;
         console.log(address);
         that.setData({
@@ -156,7 +145,7 @@ Page({
     // 2.获取并设置当前位置经纬度
     wx.getLocation({
       type: "gcj02",
-      success: async (res) => {
+      success: async(res) => {
         this.onGetLocation(res);
         this.setData({
           longitude: res.longitude,
@@ -179,23 +168,65 @@ Page({
       index: e.detail.value
     })
   },
+  choiseImage() {
+    var that = this
+    wx.chooseImage({
+      count: 1, // 默认9  
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
+      success: function(res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var tempFilePaths = res.tempFilePaths
+        console.log(tempFilePaths[0])
+
+        that.setData({
+          imgUrl: tempFilePaths
+        })
+
+      }
+    })
+  },
+  upLoadImage(found) {
+    let that = this;
+    wx.uploadFile({
+      url: Http.uploadImage(),
+      filePath: this.data.imgUrl[0], //图片路径，如tempFilePaths[0]
+      name: 'image',
+      header: {
+        "Content-Type": "multipart/form-data"
+      },
+      formData: {
+        userId: 12345678 //附加信息为用户ID
+      },
+      success: async function(res) {
+        console.log(res)
+        console.log(JSON.parse(res.data)['filename']);
+        wx.showLoading({
+          title: '发布中...',
+        })
+        found['Image'] = JSON.parse(res.data)['filename'];
+        await Http.addFound(found);
+        wx.hideLoading();
+        wx.showModal({
+          title: '提示',
+          content: '发布成功',
+          success: function (res) {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
+      },
+      fail: function(res) {
+        console.log(JSON.parse(res.data)['filename']);
+      },
+      complete: function(res) {}
+    })
+  },
   formSubmit(e) {
-    let lostTime = e.detail.value.lostTime;
+    let pickTime = e.detail.value.pickTime;
     let contact = e.detail.value.contact;
     let pickLocation = e.detail.value.pickLocation;
-
-    // @RequestParam(value = "User_id") String User_id,
-    //         @RequestParam(value = "Location") String Location,
-    //         @RequestParam(value = "Longitude") double Longitude,
-    //         @RequestParam(value = "Altitude") double Altitude,
-    //         @RequestParam(value = "Found_date") String Found_date,
-    //         @RequestParam(value = "Pick_location") String Pick_location,
-    //         @RequestParam(value = "Tel") String Tel,
-    //         @RequestParam(value = "Type_num") int Type_num,
-    //         @RequestParam(value = "Image") String Image,
-    //         @RequestParam(value = "note") String note,
-    //         @RequestParam(value = "state") int state
-
 
     const found = {
       Location: this.data.location,
@@ -204,8 +235,12 @@ Page({
       Found_date: this.data.currTime,
       Pick_location: pickLocation,
       Tel: contact,
-      Type_num: this.data.index+1
+      Type_num: this.data.index + 1,
+      User_id: app.globalData.openid,
       // Image:
+      note: '',
+      state: 0,
     }
-  }
+    this.upLoadImage(found)
+  },
 })

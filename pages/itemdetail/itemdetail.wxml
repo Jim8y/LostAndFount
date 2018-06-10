@@ -2,23 +2,23 @@
 <view class='container'>
   <image src='{{imageUrl}}'></image>
   <view class='item'>
-    <text>拾到时间</text>
-    <text class='content'></text>
+    <text>{{content.date}}</text>
+    <text class='content'>{{item.date}}</text>
   </view>
 
   <view class='item'>
-    <text>拾到地点</text>
-    <text class='content'></text>
+    <text>{{content.location}}</text>
+    <text class='content'>{{item.location}}</text>
+  </view>
+
+  <view class='item' wx:if="{{isLostItem==0}}">
+    <text>{{content.pickLocation}}</text>
+    <text class='content'>{{item.pick_location}}</text>
   </view>
 
   <view class='item'>
-    <text>领取地点</text>
-    <text class='content'></text>
+    <text>{{content.tel}}</text>
+    <text class='content'>{{item.tel}}</text>
   </view>
-
-  <view class='item'>
-    <text>联系方式</text>
-    <text class='content'></text>
-  </view>
-<button class='btn'>我要认领</button>
+<button class='btn'>{{content.btn}}</button>
 </view>

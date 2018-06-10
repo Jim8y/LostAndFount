@@ -1,11 +1,13 @@
 //app.js
 const AV = require('/utils/av-weapp-min.js'); 
+const Http = require('./utils/http.js')
 AV.init({
   appId: 'pTf5kDMERjsFopcOt9mO4C3e-gzGzoHsz', 
   appKey: 'YRb4tW0mekPrVHpCHzokI3Bf'
 })
 App({
   onLaunch: function () {
+    let that = this
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -13,8 +15,11 @@ App({
 
     // 登录
     wx.login({
-      success: res => {
+      success:async res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      let res2 = await Http.addUser('jinghui',res.code);
+      console.log(res2)
+      this.globalData.openid = res2;
       }
     })
     // 获取用户信息
@@ -39,6 +44,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    openid:''
   }
 })
