@@ -1,6 +1,6 @@
 <!--pages/itemdetail/itemdetail.wxml-->
 <view class='container'>
-  <image src='{{imageUrl}}'></image>
+  <image src='{{item.image}}' class="image"></image>
   <view class='item'>
     <text>{{content.date}}</text>
     <text class='content'>{{item.date}}</text>

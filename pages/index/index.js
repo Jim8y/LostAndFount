@@ -167,10 +167,10 @@ Page({
       }
     });
   },
-  async setMarkers(res, markers, flag = 1) {
+  async setMarkers(res, markers) {
 
     for (let i = 0; i < res.length; i++) {
-      res[i]['id'] = i * flag;
+      res[i]['id'] = markers.length+i;
       let latitude = parseFloat(res[i]['altitude'] + '');
       let longitude = parseFloat(res[i]['longitude'] + '');
       let icon = '../' + res[i]['iconPath'];
@@ -185,7 +185,7 @@ Page({
         width: 30,
         height: 30,
         callout: {
-          content: "    语言：珊珊是不是傻    \n    预计到达时间：10分钟    \n    车牌号：\"12345\"",
+          content: "    语言：微信是不是傻    \n    预计到达时间：10分钟    \n    车牌号：\"12345\"",
           color: "#000000",
           fontSize: 10,
           borderRadius: 2,

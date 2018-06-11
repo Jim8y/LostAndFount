@@ -1,8 +1,8 @@
 /* pages/itemdetail/itemdetail.wxss */
 
 .image {
-  width: 90%;
-  height: 300rpx;
+  width: 98%;
+  height: 500rpx;
 }
 
 .item {
