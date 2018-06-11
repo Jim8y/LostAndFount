@@ -99,5 +99,15 @@ Page({
    */
   onShareAppMessage: function () {
 
+  }, preView(e){
+    
+    const img = this.data.item.image
+    wx.previewImage({
+      current: img,     //当前图片地址
+      urls: [img],               //所有要预览的图片的地址集合 数组形式
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   }
 })

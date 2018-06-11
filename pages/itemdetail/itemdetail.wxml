@@ -1,6 +1,6 @@
 <!--pages/itemdetail/itemdetail.wxml-->
 <view class='container'>
-  <image src='{{item.image}}' class="image"></image>
+  <image src='{{item.image}}' class="image" bindtap='preView'></image>
   <view class='item'>
     <text>{{content.date}}</text>
     <text class='content'>{{item.date}}</text>
