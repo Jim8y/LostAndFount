@@ -202,7 +202,8 @@ Page({
           value: location
         },
         'image': 'http://39.105.118.89:7777/upload/wx8fb6b0e11d78879f.o6zAJs95U8q9TezXCAICTK0P3Fig.rzJMizAmeyFl06a54f8751998dd7fd846b46ca1f88b5.png',//res[i]['image'],
-        'tel': res[i]['tel']
+        'tel': res[i]['tel'],
+        'note': res[i]['note']
       };
       if (isLost) {
         detail['date'] = {

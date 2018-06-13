@@ -6,6 +6,7 @@
       show-location style='opacity:{{opacity}}'>
 
       <cover-view class="cover-view" animation='{{animDetail}}'>
+              <cover-image src='{{detail.image}}' class='cover-image' data-url='{{detail.image}}' bindtap='onPreview'/>
         <cover-view class='item'>
           <cover-view class='label'>
             物品:
@@ -38,6 +39,15 @@
             {{detail.pick_location.value}}
           </cover-view>
         </cover-view>
+        <cover-view class='item' wx:if='{{detail.note.length!=0}}'>
+          <cover-view class='label'>
+            备注:
+          </cover-view>
+          <cover-view class='content'>
+            {{detail.note}}
+          </cover-view>
+        </cover-view>
+
         <cover-view class='item' bindtap="onCall">
           <cover-view class='label'>
             联系方式:
@@ -46,7 +56,6 @@
             {{detail.tel}}
           </cover-view>
         </cover-view>
-        <cover-image src='{{detail.image}}' class='cover-image' data-url='{{detail.image}}' bindtap='onPreview'/>
       </cover-view>
     </map>
   </view>
