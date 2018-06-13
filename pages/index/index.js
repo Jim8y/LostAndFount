@@ -75,7 +75,7 @@ Page({
   // 地图标记点击事件，连接用户位置和点击的单车位置
   bindmarkertap(e) {
     console.log(e);
-    this.onDetail(-200);
+    this.onDetail(-240);
     let _markers = this.data.markers;
     let markerId = e.markerId;
     let currMaker = _markers[markerId];

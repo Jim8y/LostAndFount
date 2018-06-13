@@ -30,6 +30,7 @@
             sssssss
           </cover-view>
         </cover-view>
+        <cover-image src='/images/Mine.png' class='cover-image'/>
       </cover-view>
     </map>
   </view>
