@@ -10,7 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrl: '/images/addImg.png',
+    imgUrl: '',
     currTime: null,
     location: '',
     TYPE: [],

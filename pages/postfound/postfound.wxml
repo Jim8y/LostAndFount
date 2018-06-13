@@ -30,9 +30,10 @@
         <text style='margin-left:20rpx;'>选择</text>
       </picker>
     </view>
-    <view class='item-image'>
+      <view class='item-image'>
       <text>上传图片</text>
-      <image src='{{imgUrl}}' data-type='pickPic' bindtap='onTap' />
+      <image src='../../images/addImg.png' class='placeholder' data-type='pickPic' bindtap='onTap' wx:if="{{imgUrl==''}}"/>
+      <image class='image' src='{{imgUrl}}' data-type='pickPic' bindtap='onTap' />
     </view>
     <button class='btn' form-type="submit">我要发布</button>
   </view>

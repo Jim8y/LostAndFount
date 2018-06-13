@@ -1,4 +1,11 @@
 <!--index.wxml-->
 <view class="container">
-  <map id="lafMap" wx:if="{{map}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="bindmarkertap"  bindcontroltap="controltap" show-location/>
+  <map id="lafMap" wx:if="{{map}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="bindmarkertap" bindcontroltap="controltap"
+    show-location>
+     <!-- <cover-view class="cover-bg" bindtap="tap1">
+     <view class='view'>
+     </view> cover-view
+     </cover-view>
+     <cover-view class="cover-view" bindtap="tap1">cover-view</cover-view>  -->
+  </map>
 </view>

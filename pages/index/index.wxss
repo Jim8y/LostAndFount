@@ -14,3 +14,29 @@
   height: 100%;
   z-index: 1;
 }
+
+.cover-bg {
+  width: 750rpx;
+  height: 100vh;
+  text-align: center;
+  line-height: 50px;
+  background-color: #1AAD19;
+  color: #fff;
+  opacity: 0.2;
+}
+
+.view{
+  width: 300rpx;
+  height: 300rpx;
+  background: black;
+  opacity: 1;
+}
+.cover-view {
+  position: absolute;
+  width: 300rpx;
+  height: 500rpx;
+  text-align: center;
+  line-height: 50px;
+  background-color: #1AAD19;
+  color: #fff;
+}

@@ -46,12 +46,18 @@
   font-size: 14px;
 }
 
-.item-image image {
+.item-image .image {
   width: 350rpx;
   height: 350rpx;
   margin-left: 30rpx;
+  border: thin solid #a9a9a9;
 }
-
+.item-image .placeholder{
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  left:345rpx;
+}
 .btn {
   margin-top: 30rpx;
   font-size: 14px;

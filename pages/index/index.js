@@ -167,13 +167,26 @@ Page({
       }
     });
   },
-  async setMarkers(res, markers) {
+  async setMarkers(res, markers,isLost=false) {
 
     for (let i = 0; i < res.length; i++) {
       res[i]['id'] = markers.length+i;
       let latitude = parseFloat(res[i]['altitude'] + '');
       let longitude = parseFloat(res[i]['longitude'] + '');
       let icon = '../' + res[i]['iconPath'];
+      let location = res[i]['location'];
+      let Type = util.TYPE[parseInt(res[i]['type_num'])];
+      let callContent='物品：'+Type+'\n地点：' + location+'\n';
+      if(isLost){
+       let date = res[i]['lost_date']
+       callContent+='丢失时间：'+date +'\n'
+
+      }else{
+       let date = res[i]['found_date']
+        callContent += '拾到时间：'+date+'\n'
+        let pickLocation = res[i]['pick_location'];
+        callContent+='领取地点：'+pickLocation;
+      }
       if (latitude > 90 || latitude < -90) {
         continue;
       }
@@ -185,7 +198,7 @@ Page({
         width: 30,
         height: 30,
         callout: {
-          content: "    语言：微信是不是傻    \n    预计到达时间：10分钟    \n    车牌号：\"12345\"",
+          content: callContent ,
           color: "#000000",
           fontSize: 10,
           borderRadius: 2,
