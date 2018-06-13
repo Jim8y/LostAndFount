@@ -16,7 +16,8 @@ Page({
     animation: {},
     opacity: 1,
     animDetail: {},
-    detailOpen: false
+    detailOpen: false,
+    detail: {}
   },
   // 页面加载
   async onLoad(options) {
@@ -69,17 +70,23 @@ Page({
   bindregionchange(e) {
     // 拖动地图，获取附件单车位置
     if (e.type == "begin") {
-      this.onDetail(0,true);
-    } else if (e.type == "end") {}
+      this.onDetail(0, true);
+    } else if (e.type == "end") { }
   },
   // 地图标记点击事件，连接用户位置和点击的单车位置
   bindmarkertap(e) {
     console.log(e);
-    this.onDetail(-240);
+
     let _markers = this.data.markers;
     let markerId = e.markerId;
     let currMaker = _markers[markerId];
+    if (currMaker.detail.date.label === '捡到时间') {
+      this.onDetail(-320);
+    } else {
+      this.onDetail(-280);
+    }
     this.setData({
+      detail: currMaker.detail,
       polyline: [{
         points: [{
           longitude: this.data.longitude,
@@ -96,7 +103,7 @@ Page({
     })
   },
   // 定位函数，移动位置到地图中心
-  movetoPosition: function() {
+  movetoPosition: function () {
     this.mapCtx.moveToLocation();
   },
   setMapController() {
@@ -105,71 +112,71 @@ Page({
       success: (res) => {
         this.setData({
           controls: [{
-              id: 1,
-              iconPath: '/images/location.png',
-              position: {
-                left: 10,
-                top: res.windowHeight - 106,
-                width: 50,
-                height: 50
-              },
-              clickable: true
+            id: 1,
+            iconPath: '/images/location.png',
+            position: {
+              left: 10,
+              top: res.windowHeight - 106,
+              width: 50,
+              height: 50
             },
-            {
-              id: 2,
-              iconPath: '/images/forlost.png',
-              position: {
-                left: res.windowWidth / 2 - 150,
-                top: res.windowHeight - 55,
-                width: 150,
-                height: 45
-              },
-              clickable: true
+            clickable: true
+          },
+          {
+            id: 2,
+            iconPath: '/images/forlost.png',
+            position: {
+              left: res.windowWidth / 2 - 150,
+              top: res.windowHeight - 55,
+              width: 150,
+              height: 45
             },
-            {
-              id: 3,
-              iconPath: '/images/forfound.png',
-              position: {
-                left: res.windowWidth / 2,
-                top: res.windowHeight - 55,
-                width: 150,
-                height: 45
-              },
-              clickable: true
+            clickable: true
+          },
+          {
+            id: 3,
+            iconPath: '/images/forfound.png',
+            position: {
+              left: res.windowWidth / 2,
+              top: res.windowHeight - 55,
+              width: 150,
+              height: 45
             },
-            {
-              id: 4,
-              iconPath: '/images/list.png',
-              position: {
-                left: 10,
-                top: 61,
-                width: 50,
-                height: 50
-              },
-              clickable: true
+            clickable: true
+          },
+          {
+            id: 4,
+            iconPath: '/images/list.png',
+            position: {
+              left: 10,
+              top: 61,
+              width: 50,
+              height: 50
             },
-            {
-              id: 5,
-              iconPath: '/images/marker.png',
-              position: {
-                left: res.windowWidth / 2 - 11,
-                top: res.windowHeight / 2 - 45,
-                width: 20,
-                height: 30
-              },
-              clickable: true
+            clickable: true
+          },
+          {
+            id: 5,
+            iconPath: '/images/marker.png',
+            position: {
+              left: res.windowWidth / 2 - 11,
+              top: res.windowHeight / 2 - 45,
+              width: 20,
+              height: 30
             },
-            {
-              id: 6,
-              iconPath: '/images/Mine.png',
-              position: {
-                left: 10,
-                top: 10,
-                width: 50,
-                height: 50
-              },
-              clickable: true
-            }
+            clickable: true
+          },
+          {
+            id: 6,
+            iconPath: '/images/Mine.png',
+            position: {
+              left: 10,
+              top: 10,
+              width: 50,
+              height: 50
+            },
+            clickable: true
+          }
           ]
         })
       }
@@ -184,16 +191,33 @@ Page({
       let icon = '../' + res[i]['iconPath'];
       let location = res[i]['location'];
       let Type = util.TYPE[parseInt(res[i]['type_num'])];
-      let callContent = '物品：' + Type + '\n地点：' + location + '\n';
-      if (isLost) {
-        let date = res[i]['lost_date']
-        callContent += '丢失时间：' + date + '\n'
 
+      let detail = {
+        'good': {
+          'label': '物品',
+          'value': Type
+        },
+        'location': {
+          label: '地点',
+          value: location
+        },
+        'image': 'http://39.105.118.89:7777/upload/wx8fb6b0e11d78879f.o6zAJs95U8q9TezXCAICTK0P3Fig.rzJMizAmeyFl06a54f8751998dd7fd846b46ca1f88b5.png',//res[i]['image'],
+        'tel': res[i]['tel']
+      };
+      if (isLost) {
+        detail['date'] = {
+          label: '丢失时间',
+          value: res[i]['lost_date']
+        }
       } else {
-        let date = res[i]['found_date']
-        callContent += '拾到时间：' + date + '\n'
-        let pickLocation = res[i]['pick_location'];
-        callContent += '领取地点：' + pickLocation;
+        detail['date'] = {
+          label: '捡到时间',
+          value: res[i]['found_date']
+        }
+        detail['pick_location'] = {
+          label: '领取地点',
+          value: res[i]['pick_location']
+        }
       }
       if (latitude > 90 || latitude < -90) {
         continue;
@@ -205,16 +229,7 @@ Page({
         longitude: longitude,
         width: 30,
         height: 30,
-        callout: {
-          content: callContent,
-          color: "#000000",
-          fontSize: 10,
-          borderRadius: 2,
-          bgColor: '#efefef',
-          padding: 3,
-          textAlign: 'left',
-          display: 'BYCLICK'
-        }
+        detail: detail
       }
       markers.push(marker)
     }
@@ -225,7 +240,7 @@ Page({
     // 2.获取并设置当前位置经纬度
     wx.getLocation({
       type: "gcj02",
-      success: async(res) => {
+      success: async (res) => {
         console.log(res)
         this.setData({
           longitude: res.longitude,
@@ -238,14 +253,8 @@ Page({
   async getMarkers(latitude, longitude) {
     let markers = new Array()
     let res = await Http.getFounds(null, latitude, longitude);
-    console.log('11111')
-    console.log(res)
-    console.log('222222')
     this.setMarkers(res, markers);
     let res2 = await Http.getLosts(null, latitude, longitude);
-    console.log('333333')
-    console.log(res2)
-    console.log('444444')
     this.setMarkers(res2, markers, -1);
     console.log(markers)
     this.setData({
@@ -294,7 +303,7 @@ Page({
       })
 
       //直接隐藏
-      if(isHide){
+      if (isHide) {
         animation.translateY(0).step();
         this.setData({
           animDetail: animation.export(),
@@ -306,7 +315,7 @@ Page({
           animDetail: animation.export()
         })
       }
-     
+
     } else {
       //当前处于隐藏状态
       let animation = wx.createAnimation({
@@ -315,16 +324,25 @@ Page({
       })
 
       //判断是继续隐藏 还是打开
-      if(isHide){
+      if (isHide) {
 
-      }else{
+      } else {
         animation.translateY(distance).step();
         this.setData({
           animDetail: animation.export(),
           detailOpen: true
         })
       }
-      
     }
+  }, onCall(e) {
+  }, onPreview(e){
+    const url = e.currentTarget.dataset.url;
+    wx.previewImage({
+      current: url,
+      urls: [url],
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   }
 })

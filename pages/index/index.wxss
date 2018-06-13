@@ -1,15 +1,18 @@
 /**index.wxss**/
-.container{
+
+.container {
   position: relative;
   width: 100%;
   height: 100vh;
 }
-.map-view{
+
+.map-view {
   width: 100%;
   height: 100%;
   position: absolute;
 }
-#lafMap{
+
+#lafMap {
   position: absolute;
   left: 0;
   top: 0;
@@ -25,55 +28,59 @@
   height: 100vh;
   text-align: center;
   line-height: 50px;
-  background-color: #1AAD19;
+  background-color: #1aad19;
   color: #fff;
   opacity: 0.2;
 }
 
-.view{
+.view {
   width: 300rpx;
   height: 300rpx;
   background: black;
   opacity: 1;
 }
+
 .cover-view {
   position: absolute;
   width: 100%;
-  line-height: 50px;
+  height: 320px;
   background-color: white;
   display: flex;
   flex-direction: column;
-  bottom: -240px;
+  bottom: -320px;
 }
 
-.cover-view .item{
+.cover-view .item {
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-bottom:  thin solid #cccccc;
+  align-content: flex-start;
+  border-bottom: thin solid #ccc;
   color: black;
   height: 40px;
   margin-left: 30rpx;
   margin-right: 30rpx;
 }
 
-.item .label{
+.item .label {
+  display: flex;
   width: 200rpx;
+  align-items: flex-start;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.item .content {
   display: flex;
   align-items: flex-start;
   margin-left: 30rpx;
   font-weight: 100;
   font-size: 14px;
-
-}
-.item .content{
-
 }
 
-.cover-image{
+.cover-image {
   width: 100px;
   height: 100px;
   margin-top: 10px;
   margin-left: 60rpx;
-
 }
