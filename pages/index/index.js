@@ -6,7 +6,7 @@ const Http = require('../../utils/http.js');
 const util = require('../../utils/util.js')
 Page({
   data: {
-    scale: 18,
+    scale: 10,
     latitude: 0,
     longitude: 0,
     markers: [],
@@ -100,10 +100,10 @@ Page({
             id: 1,
             iconPath: '/images/location.png',
             position: {
-              left: 20,
-              top: res.windowHeight - 120,
-              width: 30,
-              height: 30
+              left: 10,
+              top: res.windowHeight - 106,
+              width: 50,
+              height: 50
             },
             clickable: true
           },
@@ -111,10 +111,10 @@ Page({
             id: 2,
             iconPath: '/images/forlost.png',
             position: {
-              left: res.windowWidth / 2 - 90 - 35,
-              top: res.windowHeight - 80,
-              width: 90,
-              height: 35
+              left: res.windowWidth / 2 - 150,
+              top: res.windowHeight - 55,
+              width: 150,
+              height: 45
             },
             clickable: true
           },
@@ -122,10 +122,10 @@ Page({
             id: 3,
             iconPath: '/images/forfound.png',
             position: {
-              left: res.windowWidth / 2 + 35,
-              top: res.windowHeight - 80,
-              width: 90,
-              height: 35
+              left: res.windowWidth / 2,
+              top: res.windowHeight - 55,
+              width: 150,
+              height: 45
             },
             clickable: true
           },
@@ -133,10 +133,10 @@ Page({
             id: 4,
             iconPath: '/images/list.png',
             position: {
-              left: res.windowWidth - 40,
-              top: 10,
-              width: 30,
-              height: 30
+              left: 10,
+              top: 61,
+              width: 50,
+              height: 50
             },
             clickable: true
           },
@@ -157,8 +157,8 @@ Page({
             position: {
               left: 10,
               top: 10,
-              width: 30,
-              height: 30
+              width: 50,
+              height: 50
             },
             clickable: true
           }
