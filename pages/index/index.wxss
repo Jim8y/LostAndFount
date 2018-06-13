@@ -4,6 +4,11 @@
   width: 100%;
   height: 100vh;
 }
+.map-view{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
 #lafMap{
   position: absolute;
   left: 0;
@@ -33,10 +38,37 @@
 }
 .cover-view {
   position: absolute;
-  width: 300rpx;
+  width: 100%;
   height: 500rpx;
   text-align: center;
   line-height: 50px;
-  background-color: #1AAD19;
+  background-color: white;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  bottom: -500rpx;
+}
+
+.cover-view .item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom:  thin solid #cccccc;
+  color: black;
+  height: 100rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+}
+
+.item .label{
+  width: 200rpx;
+  display: flex;
+  align-items: flex-start;
+  margin-left: 30rpx;
+  font-weight: 100;
+  font-size: 14px;
+
+}
+.item .content{
+
 }

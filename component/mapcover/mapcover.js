@@ -1,4 +1,4 @@
-// component/sideslide.js
+// component/mapcover/mapcover.js
 Component({
   /**
    * 组件的属性列表

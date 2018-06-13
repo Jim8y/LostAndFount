@@ -1,11 +1,36 @@
 <!--index.wxml-->
 <view class="container">
-  <map id="lafMap" wx:if="{{map}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="bindmarkertap" bindcontroltap="controltap"
-    show-location>
-     <!-- <cover-view class="cover-bg" bindtap="tap1">
-     <view class='view'>
-     </view> cover-view
-     </cover-view>
-     <cover-view class="cover-view" bindtap="tap1">cover-view</cover-view>  -->
-  </map>
+  <slide bind:hideSlide="onTapSlide" />
+  <view class='map-view' animation='{{animation}}'>
+    <map id="lafMap" wx:if="{{map}}" latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" markers="{{markers}}" controls="{{controls}}" bindmarkertap="bindmarkertap" bindcontroltap="controltap"
+      show-location style='opacity:{{opacity}}'>
+
+      <cover-view class="cover-view" bindtap="tap1" animation='{{animDetail}}'>
+        <cover-view class='item'>
+          <cover-view class='label'>
+            物品:
+          </cover-view>
+          <cover-view class='content'>
+            sssssss
+          </cover-view>
+        </cover-view>
+        <cover-view class='item'>
+          <cover-view class='label'>
+            地点:
+          </cover-view>
+          <cover-view class='content'>
+            sssssss
+          </cover-view>
+        </cover-view>
+        <cover-view class='item'>
+          <cover-view class='label'>
+            捡到时间:
+          </cover-view>
+          <cover-view class='content'>
+            sssssss
+          </cover-view>
+        </cover-view>
+      </cover-view>
+    </map>
+  </view>
 </view>
