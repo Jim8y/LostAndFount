@@ -1,6 +1,6 @@
 <scroll-view scroll-y="true" class='list-scroll'>
   <view class='content' wx:for="{{list}}">
-    <lost wx:if="{{isLost==1}}" />
+    <lost wx:if="{{isLost==1}}" item='{{item}}'/>
     <found wx:else item='{{item}}'/>
   </view>
 

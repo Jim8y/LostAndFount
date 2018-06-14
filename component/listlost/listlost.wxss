@@ -1,1 +1,1 @@
-/* component/listlost/listlost.wxss */
+@import "../../utils/listitem.wxss"
