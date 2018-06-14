@@ -24,20 +24,23 @@ Component({
         case '0':
           break;
         case '1':
+
           break;
         case '2':
+
           break;
         case '3':
-        wx.openSetting({
-          success(res){
+          wx.openSetting({
+            success(res) {
 
-          }
-        })
+            }
+          })
           break;
       }
       this.triggerEvent("hideSlide");
+      this.triggerEvent("onList", index)
     },
-    openSetting(){
+    openSetting() {
       console.log('hhhh')
     }
   }

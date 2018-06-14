@@ -1,0 +1,11 @@
+/* component/abslist/abslist.wxss */
+
+.list-scroll{
+  width: 100%;
+  height: 100vh;
+}
+
+.content{
+  display: block;
+  margin-top: 20rpx;
+}

@@ -17,7 +17,9 @@ Page({
     opacity: 1,
     animDetail: {},
     detailOpen: false,
-    detail: {}
+    detail: {},
+    lostsData:[],
+    foundsData:[]
   },
   // 页面加载
   async onLoad(options) {
@@ -52,7 +54,6 @@ Page({
         break;
       case 4:
         //list
-        console.log('ccc')
         this.onTapSlide()
         break;
       case 5:
@@ -68,9 +69,13 @@ Page({
   },
   // 地图视野改变事件
   bindregionchange(e) {
-    // 拖动地图，获取附件单车位置
+    // 拖动地图，获取位置
     if (e.type == "begin") {
       this.onDetail(0, true);
+      //如果侧边栏打开状态 那么滑动地图就会收起侧边栏
+      if (this.data.open) {
+        this.onTapSlide()
+      }
     } else if (e.type == "end") { }
   },
   // 地图标记点击事件，连接用户位置和点击的单车位置
@@ -201,7 +206,7 @@ Page({
           label: '地点',
           value: location
         },
-        'image': 'http://39.105.118.89:7777/upload/wx8fb6b0e11d78879f.o6zAJs95U8q9TezXCAICTK0P3Fig.rzJMizAmeyFl06a54f8751998dd7fd846b46ca1f88b5.png',//res[i]['image'],
+        'image': 'http://39.105.118.89:7777/upload/wx8fb6b0e11d78879f.o6zAJs95U8q9TezXCAICTK0P3Fig.rzJMizAmeyFl06a54f8751998dd7fd846b46ca1f88b5.png', //res[i]['image'],
         'tel': res[i]['tel'],
         'note': res[i]['note']
       };
@@ -260,7 +265,9 @@ Page({
     console.log(markers)
     this.setData({
       markers: markers,
-      map: true
+      map: true,
+      foundsData:res,
+      lostsData:res2
     })
   },
   onTapSlide() {
@@ -325,9 +332,7 @@ Page({
       })
 
       //判断是继续隐藏 还是打开
-      if (isHide) {
-
-      } else {
+      if (!isHide) {
         animation.translateY(distance).step();
         this.setData({
           animDetail: animation.export(),
@@ -335,15 +340,35 @@ Page({
         })
       }
     }
-  }, onCall(e) {
-  }, onPreview(e){
+  },
+  onCall(e) { },
+  onPreview(e) {
     const url = e.currentTarget.dataset.url;
     wx.previewImage({
       current: url,
       urls: [url],
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
     })
+  },
+  onListTap(index) {
+    index = parseInt(index.detail+'')
+    console.log(index)
+    if (index === 1) {//lost
+      wx.navigateTo({
+        url: '/pages/aroundlist/aroundlist?list=' + JSON.stringify(this.data.lostsData) + '&isLost=1',
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    } else if (index === 2) {//found
+      wx.navigateTo({
+        url: '/pages/aroundlist/aroundlist?list=' + JSON.stringify(this.data.foundsData)+'&isLost=0',
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
+    }
   }
 })
