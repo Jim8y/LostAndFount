@@ -45,7 +45,6 @@ Page({
       })
     }
 
-
     console.log(item)
     this.setData({
       item: item
@@ -99,7 +98,8 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }, preView(e){
+  }, 
+  preView(e){
     
     const img = this.data.item.image
     wx.previewImage({

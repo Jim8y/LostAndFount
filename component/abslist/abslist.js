@@ -24,5 +24,18 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    onDetail(e) {
+      const id = e.currentTarget.id
+      console.log(this.data.list[id])
+      if (this.data.isLost) {
+        wx.navigateTo({
+          url: '/pages/itemdetail/itemdetail?item=' + JSON.stringify(this.data.list[id]) + '&type=lost',
+        })
+      } else {
+        wx.navigateTo({
+          url: '/pages/itemdetail/itemdetail?item=' + JSON.stringify(this.data.list[id]) + '&type=found',
+        })
+      }
+    }
   }
 })

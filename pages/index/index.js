@@ -18,8 +18,9 @@ Page({
     animDetail: {},
     detailOpen: false,
     detail: {},
-    lostsData:[],
-    foundsData:[]
+    lostsData: [],
+    foundsData: [],
+    isViewing: false //是否正在查看详情 用户预览图片的时候 在返回时判断是否需要收回详情弹框
   },
   // 页面加载
   async onLoad(options) {
@@ -30,7 +31,7 @@ Page({
   onShow() {
     // 1.创建地图上下文，移动当前位置到地图中心
     this.mapCtx = wx.createMapContext("lafMap");
-    this.movetoPosition()
+    this.movetoPosition();
   },
   // 地图控件点击事件
   controltap(e) {
@@ -71,7 +72,14 @@ Page({
   bindregionchange(e) {
     // 拖动地图，获取位置
     if (e.type == "begin") {
-      this.onDetail(0, true);
+      //预览归来 不收回弹框
+      if (this.data.isViewing) {
+        this.setData({
+          isViewing: false
+        })
+      } else { //不是预览 弹框收回
+        this.onDetail(0, true);
+      }
       //如果侧边栏打开状态 那么滑动地图就会收起侧边栏
       if (this.data.open) {
         this.onTapSlide()
@@ -80,8 +88,6 @@ Page({
   },
   // 地图标记点击事件，连接用户位置和点击的单车位置
   bindmarkertap(e) {
-    console.log(e);
-
     let _markers = this.data.markers;
     let markerId = e.markerId;
     let currMaker = _markers[markerId];
@@ -266,12 +272,11 @@ Page({
     this.setData({
       markers: markers,
       map: true,
-      foundsData:res,
-      lostsData:res2
+      foundsData: res,
+      lostsData: res2
     })
   },
   onTapSlide() {
-    console.log('00')
     let that = this
     if (this.data.open) {
       let animation = wx.createAnimation({
@@ -343,28 +348,34 @@ Page({
   },
   onCall(e) { },
   onPreview(e) {
+    let that = this
+    //预览图片
     const url = e.currentTarget.dataset.url;
     wx.previewImage({
       current: url,
       urls: [url],
-      success: function (res) { },
+      success: function (res) {
+        that.setData({
+          isViewing: true
+        })
+      },
       fail: function (res) { },
       complete: function (res) { },
     })
   },
   onListTap(index) {
-    index = parseInt(index.detail+'')
+    index = parseInt(index.detail + '')
     console.log(index)
-    if (index === 1) {//lost
+    if (index === 1) { //lost
       wx.navigateTo({
         url: '/pages/aroundlist/aroundlist?list=' + JSON.stringify(this.data.lostsData) + '&isLost=1',
         success: function (res) { },
         fail: function (res) { },
         complete: function (res) { },
       })
-    } else if (index === 2) {//found
+    } else if (index === 2) { //found
       wx.navigateTo({
-        url: '/pages/aroundlist/aroundlist?list=' + JSON.stringify(this.data.foundsData)+'&isLost=0',
+        url: '/pages/aroundlist/aroundlist?list=' + JSON.stringify(this.data.foundsData) + '&isLost=0',
         success: function (res) { },
         fail: function (res) { },
         complete: function (res) { },

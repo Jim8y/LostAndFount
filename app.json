@@ -9,7 +9,7 @@
     "pages/aroundlist/aroundlist"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "black",
     "navigationBarBackgroundColor": "white",
     "navigationBarTitleText": "失物招领",
     "navigationBarTextStyle": "black"
