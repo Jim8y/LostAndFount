@@ -20,5 +20,10 @@
     <text>{{content.tel}}</text>
     <text class='content'>{{item.tel}}</text>
   </view>
-<button class='btn'>{{content.btn}}</button>
+  <view class='item'>
+    <text>{{content.note}}</text>
+    <!-- <text class='content'>{{item.note}}</text> -->
+    <text class='content'>滴滴答答滴滴答答滴滴答答滴滴答答滴滴答答滴滴答答滴滴答答滴滴答答滴滴答答的</text>
+  </view>
+<button class="btn {{isLostItem==0?'':'lost-bg'}}" bindtap='onTap'>{{content.btn}}</button>
 </view>

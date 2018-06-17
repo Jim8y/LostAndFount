@@ -1,4 +1,5 @@
 // pages/itemdetail/itemdetail.js
+var util = require('../../utils/util.js')
 Page({
 
   /**
@@ -11,13 +12,15 @@ Page({
       location: '拾到地点',
       pickLocation: '领取地点',
       tel: '联系方式',
-      btn: '认领'
+      btn: '联系对方',
+      note: '物品描述'
     },
     contentLost: {
       date: '丢失时间',
       location: '丢失地点',
       tel: '联系方式',
-      btn: '通知他'
+      btn: '通知他',
+      note: '物品描述'
     },
     content: {},
     isLostItem: 0,
@@ -98,16 +101,28 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }, 
-  preView(e){
-    
+  },
+  preView(e) {
     const img = this.data.item.image
     wx.previewImage({
-      current: img,     //当前图片地址
-      urls: [img],               //所有要预览的图片的地址集合 数组形式
+      current: img, //当前图片地址
+      urls: [img], //所有要预览的图片的地址集合 数组形式
       success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
+    })
+  },
+  onTap(e) {
+    //不是合法手机号
+    if (!util.isPoneAvailable(this.data.item.tel)) {
+      wx.showModal({
+        title: '提示',
+        content: '对方手机号格式异常',
+      })
+      return;
+    }
+    wx.makePhoneCall({
+      phoneNumber: this.data.item.tel + '',
     })
   }
 })

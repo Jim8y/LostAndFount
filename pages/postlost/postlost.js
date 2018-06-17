@@ -4,6 +4,45 @@ const util = require('../../utils/util.js')
 const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var app = getApp()
 var qqmapsdk;
+const date = new Date()
+const years = []
+const months = []
+const days = []
+const hours = []
+const minutes = []
+const multiArray = []
+
+years.push((date.getFullYear() - 1) + '年')
+years.push(date.getFullYear() + '年')
+
+var month = date.getMonth()
+var day = date.getDate() - 1
+
+var hour = date.getHours()
+var minute = date.getMinutes()
+var second = date.getSeconds()
+
+for (let i = 1; i <= 12; i++) {
+  months.push(i + '月')
+}
+
+for (let i = 1; i <= 31; i++) {
+  days.push(i + '日')
+}
+
+for (let i = 0; i < 24; i++) {
+  hours.push(i + '时')
+}
+for (let i = 0; i <= 59; i++) {
+  minutes.push(i + '分')
+}
+
+multiArray.push(years)
+multiArray.push(months)
+multiArray.push(days)
+multiArray.push(hours)
+multiArray.push(minutes)
+
 Page({
 
   /**
@@ -17,8 +56,9 @@ Page({
     foundtype: '',
     longitude: 0,
     latitude: 0,
-    index: 0
-
+    index: 0,
+    multiArray: multiArray,
+    multiIndex: [1, month, day, hour, minute],
   },
 
   /**
@@ -168,6 +208,18 @@ Page({
       index: e.detail.value
     })
   },
+  selectLocation(e) {
+    let that = this;
+    wx.chooseLocation({
+      success: function(res) {
+        console.log(res);
+        console.log(e.currentTarget.id);
+        that.setData({
+          location: res.address
+        })
+      },
+    })
+  },
   choiseImage() {
     var that = this
     wx.chooseImage({
@@ -229,7 +281,8 @@ Page({
   formSubmit(e) {
     let lostTime = e.detail.value.lostTime;
     let contact = e.detail.value.contact;
-    let pickLocation = e.detail.value.pickLocation;
+    // let location = e.detail.value.location;
+    const note = e.detail.value.note
     //   private String User_id;
     // private double longitude;
     // private double altitude;
@@ -248,9 +301,15 @@ Page({
       Type_num: this.data.index + 1,
       User_id: app.globalData.openid,
       // Image:
-      note: '',
+      note: note,
       state: 0,
     }
     this.upLoadImage(lost)
+  },
+  bindMultiPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    // this.setData({
+    //   multiIndex: e.detail.value
+    // })
   },
 })

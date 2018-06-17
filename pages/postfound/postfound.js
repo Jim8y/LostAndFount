@@ -4,6 +4,45 @@ const util = require('../../utils/util.js')
 const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var app = getApp()
 var qqmapsdk;
+const date = new Date()
+const years = []
+const months = []
+const days = []
+const hours = []
+const minutes = []
+const multiArray = []
+
+years.push((date.getFullYear() - 1) + '年')
+years.push(date.getFullYear() + '年')
+
+var month = date.getMonth()
+var day = date.getDate() - 1
+
+var hour = date.getHours()
+var minute = date.getMinutes()
+var second = date.getSeconds()
+
+for (let i = 1; i <= 12; i++) {
+  months.push(i + '月')
+}
+
+for (let i = 1; i <= 31; i++) {
+  days.push(i + '日')
+}
+
+for (let i = 0; i < 24; i++) {
+  hours.push(i + '时')
+}
+for (let i = 0; i <= 59; i++) {
+  minutes.push(i + '分')
+}
+
+multiArray.push(years)
+multiArray.push(months)
+multiArray.push(days)
+multiArray.push(hours)
+multiArray.push(minutes)
+
 Page({
 
   /**
@@ -13,18 +52,22 @@ Page({
     imgUrl: '',
     currTime: null,
     location: '',
+    pick_location: '岳麓山下小树林',
     TYPE: [],
     foundtype: '',
     longitude: 0,
     latitude: 0,
-    index: 0
+    index: 0,
+    note: '',
+    multiArray: multiArray,
+    multiIndex: [1, month, day, hour, minute],
 
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.getTime();
     this.initMap();
     this.getLocation();
@@ -37,49 +80,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
 
@@ -104,8 +147,6 @@ Page({
     })
   },
   async addLost(res2) {
-    // console.log(Http)
-
     let res = await Http.getLosts();
     console.log(res2)
     console.log(res)
@@ -131,7 +172,7 @@ Page({
         latitude: res.latitude,
         longitude: res.longitude
       },
-      success: function(addressRes) {
+      success: function (addressRes) {
         var address = addressRes.result.formatted_addresses.recommend;
         console.log(address);
         that.setData({
@@ -145,7 +186,7 @@ Page({
     // 2.获取并设置当前位置经纬度
     wx.getLocation({
       type: "gcj02",
-      success: async(res) => {
+      success: async (res) => {
         this.onGetLocation(res);
         this.setData({
           longitude: res.longitude,
@@ -154,6 +195,24 @@ Page({
         await this.addLost(res);
       }
     });
+  },
+  selectLocation(e) {
+    let that = this;
+    wx.chooseLocation({
+      success: function (res) {
+        console.log(res);
+        console.log(e.currentTarget.id);
+        if (e.currentTarget.id === 'found') {
+          that.setData({
+            location: res.address
+          })
+        } else {
+          that.setData({
+            pick_location: res.address
+          })
+        }
+      },
+    })
   },
   initMap() {
     // 实例化腾讯地图API核心类
@@ -174,7 +233,7 @@ Page({
       count: 1, // 默认9  
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-      success: function(res) {
+      success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         var tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths[0])
@@ -182,7 +241,6 @@ Page({
         that.setData({
           imgUrl: tempFilePaths
         })
-
       }
     })
   },
@@ -198,7 +256,7 @@ Page({
       formData: {
         userId: 12345678 //附加信息为用户ID
       },
-      success: async function(res) {
+      success: async function (res) {
         console.log(res)
         console.log(JSON.parse(res.data)['filename']);
         wx.showLoading({
@@ -217,17 +275,42 @@ Page({
           }
         })
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(JSON.parse(res.data)['filename']);
       },
-      complete: function(res) {}
+      complete: function (res) { }
     })
   },
   formSubmit(e) {
     let pickTime = e.detail.value.pickTime;
     let contact = e.detail.value.contact;
-    let pickLocation = e.detail.value.pickLocation;
+    let note = e.detail.value.note;
+    if (!util.isPoneAvailable(this.data.item.tel)) {
+      wx.showModal({
+        title: '警告',
+        content: '手机号格式错误',
+      })
+      return;
+    }
 
+    let pickLocation = e.detail.value.pickLocation;
+    if (pickLocation.length === 0 ||
+      pickTime.length === 0 ||
+      note.length === 0) {
+      wx.showModal({
+        title: '警告',
+        content: '请填写所有项',
+      })
+      return;
+    }
+    console.log(this.data.imgUrl[0].length)
+    if (this.data.imgUrl[0].length === 0) {
+      wx.showModal({
+        title: '警告',
+        content: '请添加物品图片',
+      })
+      return;
+    }
     const found = {
       Location: this.data.location,
       Longitude: this.data.longitude,
@@ -237,10 +320,15 @@ Page({
       Tel: contact,
       Type_num: this.data.index + 1,
       User_id: app.globalData.openid,
-      // Image:
-      note: '',
+      note: note,
       state: 0,
     }
     this.upLoadImage(found)
+  },
+  bindMultiPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      multiIndex: e.detail.value
+    })
   },
 })

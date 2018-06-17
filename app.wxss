@@ -1,6 +1,6 @@
 /**app.wxss**/
 .container{
-	background-color: #f2f2f2;
+	background-color: white;
 	height: 100vh;
   display: flex;
   flex-direction: column;

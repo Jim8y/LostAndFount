@@ -8,26 +8,39 @@
 .item {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
-  align-content: flex-start;
-  margin-top: 40rpx;
-  margin-bottom: 20rpx;
+  align-items: center;
+  border-bottom: thin solid #ddd;
+  padding: 10rpx 0 10rpx 20rpx;
 }
 
 .item text {
-  color: black;
-  font-size: 14px;
+  color: #aaa;
+  font-size: 12px;
+  margin-left: 30rpx;
+  align-items: center;
 }
 
 .item .content {
   color: black;
   font-size: 14px;
-  border-bottom: thin solid #aaa;
   width: 500rpx;
-  height: 55rpx;
   margin-left: 60rpx;
+  font-weight: 100;
+  align-items: center;
 }
+
 .btn {
-  margin-top: 30rpx;
+  margin-top: 50rpx;
   font-size: 14px;
+  width: 700rpx;
+  background-color: #159a8d;
+  color: white;
+}
+
+button::after {
+  border: none;
+}
+
+.lost-bg {
+  background-color: #fd683f;
 }
