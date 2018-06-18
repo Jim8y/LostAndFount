@@ -5,7 +5,6 @@
     "pages/postfound/postfound",
     "pages/itemdetail/itemdetail",
     "pages/mine/mine",
-    "pages/lists/lists",
     "pages/aroundlist/aroundlist"
   ],
   "window": {

@@ -194,7 +194,9 @@ Page({
         console.log(res);
         console.log(e.currentTarget.id);
         that.setData({
-          location: res.address
+          location: res.address,
+          longitude: res.longitude,
+          latitude: res.latitude
         })
       },
     })
@@ -255,7 +257,7 @@ Page({
       Altitude: this.data.latitude,
       Lost_date: this.data.currTime,
       Tel: contact,
-      Type_num: this.data.index + 1,
+      Type_num: parseInt(this.data.index + '') + 1,
       User_id: app.globalData.openid,
       note: note,
       state: 0,

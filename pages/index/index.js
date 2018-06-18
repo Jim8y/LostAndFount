@@ -55,7 +55,6 @@ Page({
             success: function (res) {
               if (res.confirm) {
                 console.log('用户点击确定')
-
               }
             }
           })
@@ -90,6 +89,19 @@ Page({
       case 5:
         break;
       case 6:
+        if (app.globalData.openid === '') {
+          wx.showModal({
+            title: '权限提示',
+            content: '未能获取用户信息，请进入设置界面授权',
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+
+              }
+            }
+          })
+          return;
+        }
         wx.navigateTo({
           url: '../mine/mine',
         })

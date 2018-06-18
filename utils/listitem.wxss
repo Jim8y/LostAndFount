@@ -5,41 +5,53 @@
   align-items: center;
   flex-direction: row;
   background-color: white;
+  justify-content: space-around;
   border-radius: 2px;
-  width: 700rpx;
+  width: 750rpx;
+  align-content: center;
 }
-
+.lcontent{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 2px;
+  align-content: center;
+  width: 720rpx;
+  box-shadow: 2px 2px 5px 3px #eeeeee;
+}
 .item image {
   width: 150rpx;
   height: 150rpx;
   margin-left: 30rpx;
   align-items: center;
-  border: thin solid #eeeeee;
+  border: thin solid #eee;
 }
 
 .item .right {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 500rpx;
 }
 
-.right .content{
+.right .content {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  width: 90%;
+  width: 480rpx;
+  margin-left: 30rpx;
 }
-.content .label{
+
+.content .label {
   display: flex;
   align-items: center;
   font-weight: 100;
   font-size: 12px;
-  width: 170rpx;
+  width: 150rpx;
   height: 70rpx;
 }
 
-.content .value{
+.content .value {
   display: flex;
   align-items: center;
   font-weight: 100;
