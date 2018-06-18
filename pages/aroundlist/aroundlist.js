@@ -15,8 +15,6 @@ Page({
   onLoad: function (options) {
     const list = JSON.parse(options.list);
     const isLost = parseInt(options.isLost + '')
-    console.log('././../')
-    console.log(isLost)
     this.setData({
       goodList: list,
       isLost: isLost

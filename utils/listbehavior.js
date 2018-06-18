@@ -6,7 +6,7 @@ module.exports = Behavior({
       type: Object,
       value: null,
       observer: function (newVal, oldVal) {
-        const ty = parseInt(newVal.type_num)
+        const ty = parseInt(newVal.type_num)-1
         newVal.type_num = Type.TYPE[ty];
         this.setData({ item: newVal })
       }

@@ -74,7 +74,7 @@ function httpRequest(params = {}, url, method = 'GET') {
     else
       TYPE = 'application/x-www-form-urlencoded';
     hotapp.request({
-      useProxy: false,
+      useProxy: true,
       url: url, // 需要代理请求的网址
       method: method,
       data: params,

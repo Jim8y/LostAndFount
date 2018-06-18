@@ -26,9 +26,9 @@
   </view>
   <button wx:if='{{!isMine}}' class="btn {{isLostItem==0?'':'lost-bg'}}" bindtap='onTap'>{{content.btn}}</button>
   <view class='mineView' wx:else>
-    <view class='left-list'>
+    <!-- <view class='left-list'>
       <image src='../../images/ellipsis.png'></image>
     </view>
-    <view class="finish {{isLostItem?'':'lost-bg'}}">完成</view>
+    <view class="finish {{isLostItem?'':'lost-bg'}}">完成</view> -->
   </view>
 </view>

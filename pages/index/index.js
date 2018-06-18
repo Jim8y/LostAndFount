@@ -243,7 +243,7 @@ Page({
       let longitude = parseFloat(res[i]['longitude'] + '');
       let icon = '../' + res[i]['iconPath'];
       let location = res[i]['location'];
-      let Type = util.TYPE[parseInt(res[i]['type_num'])];
+      let Type = util.TYPE[parseInt(res[i]['type_num'])-1];
 
       let detail = {
         'good': {
