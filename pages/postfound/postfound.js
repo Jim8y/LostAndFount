@@ -23,7 +23,7 @@ var minute = date.getMinutes()
 var second = date.getSeconds()
 
 for (let i = 1; i <= 12; i++) {
-  
+
   months.push(util.PrefixInteger(i, 2) + '月')
 }
 
@@ -146,25 +146,6 @@ Page({
       currTime: time
     })
   },
-  async addLost(res2) {
-    let res = await Http.getLosts();
-    console.log(res2)
-    console.log(res)
-    let that = this;
-    let lost = {
-      User_id: 'lalala',
-      Longitude: res2.longitude,
-      Altitude: res2.latitude,
-      Lost_date: util.formatTime(new Date()) + '',
-      Tel: '88888',
-      Type_num: 1,
-      Image: 'hhhhhh',
-      note: 'jjj',
-      Location: 'hhhh'
-    }
-    res = await Http.addLost(lost);
-    console.log(res);
-  },
   onGetLocation(res) {
     let that = this;
     qqmapsdk.reverseGeocoder({
@@ -192,7 +173,6 @@ Page({
           longitude: res.longitude,
           latitude: res.latitude
         })
-        await this.addLost(res);
       }
     });
   },
@@ -260,7 +240,7 @@ Page({
         wx.showLoading({
           title: '发布中...',
         })
-        found['Image'] = that.data.imgUrl[0];
+        found['Image'] = that.data.imgUrl[0].split('/')[3]
         await Http.addFound(found);
         wx.hideLoading();
         wx.showModal({
@@ -283,7 +263,7 @@ Page({
     let pickTime = e.detail.value.pickTime;
     let contact = e.detail.value.contact;
     let note = e.detail.value.note;
-    if (!util.isPoneAvailable(this.data.item.tel)) {
+    if (!util.isPoneAvailable(contact)) {
       wx.showModal({
         title: '警告',
         content: '手机号格式错误',

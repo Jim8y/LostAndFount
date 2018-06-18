@@ -8,7 +8,7 @@
       <image class='image' src='{{imgUrl}}' data-type='pickPic' bindtap='onTap' />
     </view>
 
-    <view class="item">
+    <view class="item" style='margin-top:30rpx;'>
       <text>拾到时间</text>
       <input name="pickTime" value="{{currTime}}" />
       <picker mode="multiSelector" value="{{multiIndex}}" range="{{multiArray}}" bindchange="bindMultiPickerChange">
@@ -30,7 +30,7 @@
 
     <view class="item">
       <text>联系方式</text>
-      <input name="contact" value='1100110001110' />
+      <input name="contact" value='18573129655' />
     </view>
 
     <view class="item">
@@ -40,7 +40,6 @@
         <image src='/images/select_type.png'></image>
       </picker>
     </view>
-
     <button class='btn bg' form-type="submit">我要发布</button>
   </view>
 </form>

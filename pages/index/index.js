@@ -24,7 +24,6 @@ Page({
   },
   // 页面加载
   async onLoad(options) {
-    this.getLocation();
     this.setMapController();
   },
   // 页面显示
@@ -32,6 +31,7 @@ Page({
     // 1.创建地图上下文，移动当前位置到地图中心
     this.mapCtx = wx.createMapContext("lafMap");
     this.movetoPosition();
+    this.getLocation();
   },
   // 地图控件点击事件
   controltap(e) {
@@ -212,7 +212,7 @@ Page({
           label: '地点',
           value: location
         },
-        'image': 'http://39.105.118.89:7777/upload/wx8fb6b0e11d78879f.o6zAJs95U8q9TezXCAICTK0P3Fig.rzJMizAmeyFl06a54f8751998dd7fd846b46ca1f88b5.png', //res[i]['image'],
+        'image': res[i]['image'],
         'tel': res[i]['tel'],
         'note': res[i]['note']
       };

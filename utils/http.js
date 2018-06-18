@@ -12,8 +12,8 @@ async function getLosts(userId = null, latitude = null, longitude = null) {
     }, url, 'POST')
   } else {
     return await httpRequest({
-      Altitude: latitude,
-      Longitude: longitude
+      Altitude: parseFloat(latitude+''),
+      Longitude: parseFloat(longitude+'')
     }, url, 'POST')
   }
 }
@@ -28,8 +28,8 @@ async function getFounds(userId = null, latitude = null, longitude = null) {
     }, url, 'POST')
   } else {
     return await httpRequest({
-      Altitude: latitude,
-      Longitude: longitude
+      Altitude: parseFloat(latitude + ''),
+      Longitude: parseFloat(longitude + '')
     }, url, 'POST')
   }
 }

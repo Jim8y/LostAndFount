@@ -143,27 +143,6 @@ Page({
       currTime: time
     })
   },
-  async addLost(res2) {
-    // console.log(Http)
-
-    let res = await Http.getLosts();
-    console.log(res2)
-    console.log(res)
-    let that = this;
-    let lost = {
-      User_id: 'lalala',
-      Longitude: res2.longitude,
-      Altitude: res2.latitude,
-      Lost_date: util.formatTime(new Date()) + '',
-      Tel: '88888',
-      Type_num: 1,
-      Image: 'hhhhhh',
-      note: 'jjj',
-      Location: 'hhhh'
-    }
-    res = await Http.addLost(lost);
-    console.log(res);
-  },
   onGetLocation(res) {
     let that = this;
     qqmapsdk.reverseGeocoder({
@@ -191,7 +170,7 @@ Page({
           longitude: res.longitude,
           latitude: res.latitude
         })
-        await this.addLost(res);
+        //await this.addLost(res);
       }
     });
   },
@@ -250,23 +229,15 @@ Page({
       formData: {
         userId: 12345678 //附加信息为用户ID
       },
-      success: async function (res) {
-
-        lost['Image'] = that.data.imgUrl[0]
+      success: function (res) {
+        console.log('-------')
+        console.log(res)
+        console.log(that.data.imgUrl[0].split('/')[3])
+        lost['Image'] = that.data.imgUrl[0].split('/')[3]
         wx.showLoading({
           title: '发布中...',
         })
-        await Http.addLost(lost);
-        wx.hideLoading();
-        wx.showModal({
-          title: '提示',
-          content: '发布成功',
-          success: function (res) {
-            wx.navigateBack({
-              delta: 1
-            })
-          }
-        })
+        that.doInsert(lost);
       },
       fail: function (res) {
         console.log(JSON.parse(res.data)['filename']);
@@ -306,4 +277,17 @@ Page({
       currTime: t
     })
   },
+  async doInsert(lost){
+    await Http.addLost(lost);
+    wx.hideLoading();
+    wx.showModal({
+      title: '提示',
+      content: '发布成功',
+      success: function (res) {
+        wx.navigateBack({
+          delta: 1
+        })
+      }
+    })
+  }
 })
