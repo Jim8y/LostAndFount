@@ -251,15 +251,11 @@ Page({
         userId: 12345678 //附加信息为用户ID
       },
       success: async function (res) {
-        console.log(res)
-        console.log(JSON.parse(res.data)['filename']);
-        lost['Image'] = JSON.parse(res.data)['filename'];
+
+        lost['Image'] = that.data.imgUrl[0]
         wx.showLoading({
           title: '发布中...',
         })
-        lost = encodeURI(JSON.stringify(lost), "utf-8");
-        lost = decodeURI(lost, "utf-8");
-        lost = JSON.parse(lost);
         await Http.addLost(lost);
         wx.hideLoading();
         wx.showModal({
@@ -281,17 +277,7 @@ Page({
   formSubmit(e) {
     let lostTime = e.detail.value.lostTime;
     let contact = e.detail.value.contact;
-    // let location = e.detail.value.location;
     const note = e.detail.value.note
-    //   private String User_id;
-    // private double longitude;
-    // private double altitude;
-    // private String Lost_date;
-    // private String Tel;
-    // private int Type_num;
-    // private String Image;
-    // private String note;
-    // private String Location;
     const lost = {
       Location: this.data.location,
       Longitude: this.data.longitude,
@@ -300,7 +286,6 @@ Page({
       Tel: contact,
       Type_num: this.data.index + 1,
       User_id: app.globalData.openid,
-      // Image:
       note: note,
       state: 0,
     }

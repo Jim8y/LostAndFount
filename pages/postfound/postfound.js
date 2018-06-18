@@ -257,12 +257,10 @@ Page({
         userId: 12345678 //附加信息为用户ID
       },
       success: async function (res) {
-        console.log(res)
-        console.log(JSON.parse(res.data)['filename']);
         wx.showLoading({
           title: '发布中...',
         })
-        found['Image'] = JSON.parse(res.data)['filename'];
+        found['Image'] = that.data.imgUrl[0];
         await Http.addFound(found);
         wx.hideLoading();
         wx.showModal({
