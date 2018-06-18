@@ -20,7 +20,8 @@ Page({
     detail: {},
     lostsData: [],
     foundsData: [],
-    isViewing: false //是否正在查看详情 用户预览图片的时候 在返回时判断是否需要收回详情弹框
+    isViewing: false, //是否正在查看详情 用户预览图片的时候 在返回时判断是否需要收回详情弹框
+    authed: false
   },
   // 页面加载
   async onLoad(options) {
@@ -35,8 +36,6 @@ Page({
   },
   // 地图控件点击事件
   controltap(e) {
-    console.log(e.controlId)
-
     // 判断点击的是哪个控件 e.controlId代表控件的id，在页面加载时的第3步设置的id
     switch (e.controlId) {
       // 点击定位控件
@@ -44,11 +43,38 @@ Page({
         this.movetoPosition();
         break;
       case 2:
+
+        if (app.globalData.openid === '') {
+          wx.showModal({
+            title: '权限提示',
+            content: '未能获取用户信息，请进入设置界面授权',
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+
+              }
+            }
+          })
+          return;
+        }
         wx.navigateTo({
           url: '../postlost/postlost',
         })
         break;
       case 3:
+        if (app.globalData.openid === '') {
+          wx.showModal({
+            title: '权限提示',
+            content: '未能获取用户信息，请进入设置界面授权',
+            success: function (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+
+              }
+            }
+          })
+          return;
+        }
         wx.navigateTo({
           url: '../postfound/postfound',
         })
