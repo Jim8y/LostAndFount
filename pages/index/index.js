@@ -21,11 +21,14 @@ Page({
     lostsData: [],
     foundsData: [],
     isViewing: false, //是否正在查看详情 用户预览图片的时候 在返回时判断是否需要收回详情弹框
-    authed: false
+    showModal: false,
+    hasUserInfo: true,
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   // 页面加载
   async onLoad(options) {
     this.setMapController();
+    
   },
   // 页面显示
   onShow() {
@@ -33,6 +36,7 @@ Page({
     this.mapCtx = wx.createMapContext("lafMap");
     this.movetoPosition();
     this.getLocation();
+    this.onCheckUserInfo();
   },
   // 地图控件点击事件
   controltap(e) {
@@ -405,6 +409,36 @@ Page({
         success: function (res) { },
         fail: function (res) { },
         complete: function (res) { },
+      })
+    }
+  },
+  preventTouchMove: function () {
+
+  },
+  go: function () {
+    this.setData({
+      showModal: false
+    })
+  }, 
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+  },
+  onCheckUserInfo(){
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true,
+        showModal:false
+      })
+    } else{
+      this.setData({
+        hasUserInfo: false,
+        showModal: true
       })
     }
   }

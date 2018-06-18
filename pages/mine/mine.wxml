@@ -5,4 +5,12 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
+  <view class='item'>
+  <text>我发布的寻物</text>
+  <image src='../../images/right.png'></image>
+  </view>
+  <view class='item'>
+  <text>我发布的寻主</text>
+   <image src='../../images/right.png'></image>
+  </view>
 </view>
