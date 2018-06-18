@@ -38,9 +38,12 @@ function isPoneAvailable(str) {
     return true;
   }
 }  
-
+function PrefixInteger(num, n) {
+  return (Array(n).join(0) + num).slice(-n);
+}
 module.exports = {
   formatTime: formatTime,
   TYPE: TYPE,
-  isPoneAvailable: isPoneAvailable
+  isPoneAvailable: isPoneAvailable,
+  PrefixInteger: PrefixInteger
 }

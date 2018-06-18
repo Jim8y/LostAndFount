@@ -4,6 +4,7 @@ const util = require('../../utils/util.js')
 const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 var app = getApp()
 var qqmapsdk;
+
 const date = new Date()
 const years = []
 const months = []
@@ -23,7 +24,7 @@ var minute = date.getMinutes()
 var second = date.getSeconds()
 
 for (let i = 1; i <= 12; i++) {
-  months.push(i + '月')
+  months.push(util.PrefixInteger(i, 2) + '月')
 }
 
 for (let i = 1; i <= 31; i++) {
@@ -31,12 +32,11 @@ for (let i = 1; i <= 31; i++) {
 }
 
 for (let i = 0; i < 24; i++) {
-  hours.push(i + '时')
+  hours.push(util.PrefixInteger(i, 2) + '时')
 }
 for (let i = 0; i <= 59; i++) {
-  minutes.push(i + '分')
+  minutes.push(util.PrefixInteger(i, 2) + '分')
 }
-
 multiArray.push(years)
 multiArray.push(months)
 multiArray.push(days)
@@ -64,7 +64,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.getTime();
     this.initMap();
     this.getLocation();
@@ -77,49 +77,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
 
@@ -171,7 +171,7 @@ Page({
         latitude: res.latitude,
         longitude: res.longitude
       },
-      success: function(addressRes) {
+      success: function (addressRes) {
         var address = addressRes.result.formatted_addresses.recommend;
         console.log(address);
         that.setData({
@@ -185,7 +185,7 @@ Page({
     // 2.获取并设置当前位置经纬度
     wx.getLocation({
       type: "gcj02",
-      success: async(res) => {
+      success: async (res) => {
         this.onGetLocation(res);
         this.setData({
           longitude: res.longitude,
@@ -211,7 +211,7 @@ Page({
   selectLocation(e) {
     let that = this;
     wx.chooseLocation({
-      success: function(res) {
+      success: function (res) {
         console.log(res);
         console.log(e.currentTarget.id);
         that.setData({
@@ -226,7 +226,7 @@ Page({
       count: 1, // 默认9  
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
-      success: function(res) {
+      success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         var tempFilePaths = res.tempFilePaths
         console.log(tempFilePaths[0])
@@ -250,7 +250,7 @@ Page({
       formData: {
         userId: 12345678 //附加信息为用户ID
       },
-      success: async function(res) {
+      success: async function (res) {
         console.log(res)
         console.log(JSON.parse(res.data)['filename']);
         lost['Image'] = JSON.parse(res.data)['filename'];
@@ -265,17 +265,17 @@ Page({
         wx.showModal({
           title: '提示',
           content: '发布成功',
-          success: function(res) {
+          success: function (res) {
             wx.navigateBack({
               delta: 1
             })
           }
         })
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(JSON.parse(res.data)['filename']);
       },
-      complete: function(res) {}
+      complete: function (res) { }
     })
   },
   formSubmit(e) {
@@ -311,5 +311,14 @@ Page({
     // this.setData({
     //   multiIndex: e.detail.value
     // })
+    let Y = years[e.detail.value[0]].match(/\d/g).join("")
+    let M = months[e.detail.value[1]].match(/\d/g).join("")
+    let D = days[e.detail.value[2]].match(/\d/g).join("")
+    let h = hours[e.detail.value[3]].match(/\d/g).join("")
+    let m = minutes[e.detail.value[4]].match(/\d/g).join("")
+    let t = Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + '00'
+    this.setData({
+      currTime: t
+    })
   },
 })

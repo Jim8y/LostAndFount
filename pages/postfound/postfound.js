@@ -23,7 +23,8 @@ var minute = date.getMinutes()
 var second = date.getSeconds()
 
 for (let i = 1; i <= 12; i++) {
-  months.push(i + '月')
+  
+  months.push(util.PrefixInteger(i, 2) + '月')
 }
 
 for (let i = 1; i <= 31; i++) {
@@ -31,10 +32,10 @@ for (let i = 1; i <= 31; i++) {
 }
 
 for (let i = 0; i < 24; i++) {
-  hours.push(i + '时')
+  hours.push(util.PrefixInteger(i, 2) + '时')
 }
 for (let i = 0; i <= 59; i++) {
-  minutes.push(i + '分')
+  minutes.push(util.PrefixInteger(i, 2) + '分')
 }
 
 multiArray.push(years)
@@ -61,7 +62,6 @@ Page({
     note: '',
     multiArray: multiArray,
     multiIndex: [1, month, day, hour, minute],
-
   },
 
   /**
@@ -327,8 +327,15 @@ Page({
   },
   bindMultiPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    let Y = years[e.detail.value[0]].match(/\d/g).join("")
+    let M = months[e.detail.value[1]].match(/\d/g).join("")
+    let D = days[e.detail.value[2]].match(/\d/g).join("")
+    let h = hours[e.detail.value[3]].match(/\d/g).join("")
+    let m = minutes[e.detail.value[4]].match(/\d/g).join("")
+    let t = Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + '00'
+
     this.setData({
-      multiIndex: e.detail.value
+      currTime: t
     })
   },
 })

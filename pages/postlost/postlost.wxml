@@ -14,7 +14,6 @@
       <picker mode="multiSelector" value="{{multiIndex}}" range="{{multiArray}}" bindchange="bindMultiPickerChange">
         <image src="/images/Date.png" />
       </picker>
-
     </view>
 
     <view class="item">
