@@ -1,10 +1,4 @@
-//app.js
-const AV = require('/utils/av-weapp-min.js');
 const Http = require('./utils/http.js')
-AV.init({
-  appId: 'pTf5kDMERjsFopcOt9mO4C3e-gzGzoHsz',
-  appKey: 'YRb4tW0mekPrVHpCHzokI3Bf'
-})
 App({
   onLaunch: function () {
     let that = this
@@ -15,6 +9,20 @@ App({
         let res2 = await Http.addUser('jinghui', res.code);
         console.log(res2)
         this.globalData.openid = res2;
+
+        wx.getUserInfo({
+          success: res => {
+            console.log(res)
+            // 可以将 res 发送给后台解码出 unionId
+            this.globalData.userInfo = res.userInfo
+
+            // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+            // 所以此处加入 callback 以防止这种情况
+            if (this.userInfoReadyCallback) {
+              this.userInfoReadyCallback(res)
+            }
+          }
+        })
       }
     })
     // 获取用户信息

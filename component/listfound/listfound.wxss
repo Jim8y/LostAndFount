@@ -1,1 +1,2 @@
-@import "../../utils/listitem.wxss"
+@import "../../utils/listitem.wxss";
+
