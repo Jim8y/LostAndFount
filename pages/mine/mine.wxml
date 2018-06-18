@@ -5,11 +5,11 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class='item'>
+  <view class='item' bindtap='toMyLost'>
   <text>我发布的寻物</text>
   <image src='../../images/right.png'></image>
   </view>
-  <view class='item'>
+  <view class='item' bindtap='toMyFound'>
   <text>我发布的寻主</text>
    <image src='../../images/right.png'></image>
   </view>

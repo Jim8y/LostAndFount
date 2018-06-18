@@ -17,7 +17,7 @@ Page({
   onLoad: function (options) {
     this.getLost();
     this.getFound();
-    
+
   },
 
   /**
@@ -124,5 +124,9 @@ Page({
       foundSum: founds.length,
       origFound: res
     })
+  }, toMyLost(e) {
+
+  }, toMyFound(e) {
+
   }
 })

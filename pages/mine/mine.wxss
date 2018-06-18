@@ -12,10 +12,13 @@
   height: 128rpx;
   margin: 20rpx;
   border-radius: 50%;
+  
 }
 
 .userinfo-nickname {
   color: #aaa;
+  font-size: 14px;
+  margin-top: 30rpx;
 }
 
 .item {
