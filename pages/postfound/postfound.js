@@ -53,7 +53,7 @@ Page({
     imgUrl: '',
     currTime: null,
     location: '',
-    pick_location: '岳麓山下小树林',
+    pick_location: '',
     TYPE: [],
     foundtype: '',
     longitude: 0,
@@ -184,7 +184,7 @@ Page({
         console.log(e.currentTarget.id);
         if (e.currentTarget.id === 'found') {
           that.setData({
-            location: res.address,
+            location: res.name,
             longitude: res.longitude,
             latitude: res.latitude
           })
@@ -282,8 +282,8 @@ Page({
       })
       return;
     }
-    console.log(this.data.imgUrl[0].length)
-    if (this.data.imgUrl[0].length === 0) {
+    console.log(this.data.imgUrl)
+    if (this.data.imgUrl.length === 0) {
       wx.showModal({
         title: '警告',
         content: '请添加物品图片',
@@ -297,7 +297,7 @@ Page({
       Found_date: this.data.currTime,
       Pick_location: pickLocation,
       Tel: contact,
-      Type_num: parseInt(this.data.index + '') + 1,
+      Type_num: parseInt(this.data.index + ''),
       User_id: app.globalData.openid,
       note: note,
       state: 0,

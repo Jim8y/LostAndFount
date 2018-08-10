@@ -23,15 +23,24 @@ Page({
     isViewing: false, //是否正在查看详情 用户预览图片的时候 在返回时判断是否需要收回详情弹框
     showModal: false,
     hasUserInfo: true,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    showModalLocation: false
   },
   // 页面加载
   async onLoad(options) {
-    this.setMapController();
-    
+
+    if (wx.canIUse('button.open-type.getUserInfo'))
+      this.setMapController();
+
   },
   // 页面显示
   onShow() {
+    if (this.data.isViewing) {
+      this.setData({
+        isViewing: false
+      })
+      return
+    }
     // 1.创建地图上下文，移动当前位置到地图中心
     this.mapCtx = wx.createMapContext("lafMap");
     this.movetoPosition();
@@ -112,6 +121,13 @@ Page({
   },
   // 地图视野改变事件
   bindregionchange(e) {
+    if (this.data.isViewing) {
+      this.setData({
+        isViewing: false
+      })
+      return
+    }
+
     // 拖动地图，获取位置
     if (e.type == "begin") {
       //预览归来 不收回弹框
@@ -128,15 +144,18 @@ Page({
       }
     } else if (e.type == "end") { }
   },
-  // 地图标记点击事件，连接用户位置和点击的单车位置
+  // 地图标记点击事件
   bindmarkertap(e) {
     let _markers = this.data.markers;
     let markerId = e.markerId;
     let currMaker = _markers[markerId];
+    console.log(markerId)
+    console.log(currMaker)
+    console.log(_markers)
     if (currMaker.detail.date.label === '捡到时间') {
-      this.onDetail(-320);
+      this.onDetail(-360);
     } else {
-      this.onDetail(-280);
+      this.onDetail(-320);
     }
     this.setData({
       detail: currMaker.detail,
@@ -236,14 +255,16 @@ Page({
     });
   },
   async setMarkers(res, markers, isLost = false) {
-
     for (let i = 0; i < res.length; i++) {
-      res[i]['id'] = markers.length + i;
+      res[i]['id'] = markers.length;
+      console.log(res[i]);
+      console.log(markers.length)
+      console.log(res[i]['id'] )
       let latitude = parseFloat(res[i]['altitude'] + '');
       let longitude = parseFloat(res[i]['longitude'] + '');
       let icon = '../' + res[i]['iconPath'];
       let location = res[i]['location'];
-      let Type = util.TYPE[parseInt(res[i]['type_num'])-1];
+      let Type = util.TYPE[parseInt(res[i]['type_num'])];
 
       let detail = {
         'good': {
@@ -278,7 +299,7 @@ Page({
       }
       let marker = {
         iconPath: icon,
-        id: i,
+        id: markers.length,
         latitude: latitude,
         longitude: longitude,
         width: 30,
@@ -298,9 +319,15 @@ Page({
         console.log(res)
         this.setData({
           longitude: res.longitude,
-          latitude: res.latitude
+          latitude: res.latitude,
+          showModalLocation: false
         })
         that.getMarkers(res.latitude, res.longitude);
+      },
+      fail: function (res) {
+        that.setData({
+          showModalLocation: true,
+        })
       }
     });
   },
@@ -388,10 +415,18 @@ Page({
       }
     }
   },
-  onCall(e) { },
+  onCall(e) {
+    const tel = e.currentTarget.id;
+    wx.makePhoneCall({
+      phoneNumber: tel,
+    })
+    this.setData({
+      isViewing: true
+    })
+  },
   onPreview(e) {
     let that = this
-    //预览图片
+    // 预览图片
     const url = e.currentTarget.dataset.url;
     wx.previewImage({
       current: url,
@@ -431,7 +466,7 @@ Page({
     this.setData({
       showModal: false
     })
-  }, 
+  },
   getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -440,14 +475,14 @@ Page({
       hasUserInfo: true
     })
   },
-  onCheckUserInfo(){
+  onCheckUserInfo() {
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true,
-        showModal:false
+        showModal: false
       })
-    } else{
+    } else {
       this.setData({
         hasUserInfo: false,
         showModal: true

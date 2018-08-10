@@ -86,7 +86,7 @@ Page({
 
     for (let i = 0; i < res.length; i++) {
       let icon = '../' + res[i]['iconPath'];
-      let TYPE = parseInt(res[i]['type_num'] + '')-1;
+      let TYPE = parseInt(res[i]['type_num'] + '');
       let location = res[i]['location'];
       let lost = {
         icon: icon,
@@ -110,7 +110,7 @@ Page({
 
     for (let i = 0; i < res.length; i++) {
       let icon = '../' + res[i]['iconPath'];
-      let TYPE = parseInt(res[i]['type_num'] + '')-1;
+      let TYPE = parseInt(res[i]['type_num'] + '');
       let location = res[i]['location'];
 
       let found = {

@@ -1,7 +1,7 @@
 <!--pages/itemdetail/itemdetail.wxml-->
 <view class='container'>
   <image src='{{item.image}}' class="image" bindtap='preView'></image>
-  <view class='item'>
+  <view class='item' style='margin-top:50rpx;'>
     <text>{{content.date}}</text>
     <text class='content'>{{item.date}}</text>
   </view>

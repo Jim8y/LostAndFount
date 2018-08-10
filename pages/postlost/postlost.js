@@ -160,7 +160,6 @@ Page({
     })
   },
   getLocation() {
-
     // 2.获取并设置当前位置经纬度
     wx.getLocation({
       type: "gcj02",
@@ -194,7 +193,7 @@ Page({
         console.log(res);
         console.log(e.currentTarget.id);
         that.setData({
-          location: res.address,
+          location: res.name,
           longitude: res.longitude,
           latitude: res.latitude
         })
@@ -250,14 +249,38 @@ Page({
   formSubmit(e) {
     let lostTime = e.detail.value.lostTime;
     let contact = e.detail.value.contact;
+    if (!util.isPoneAvailable(contact)) {
+      wx.showModal({
+        title: '警告',
+        content: '手机号格式错误',
+      })
+      return;
+    }
+
     const note = e.detail.value.note
+    if (note.length === 0) {
+      wx.showModal({
+        title: '警告',
+        content: '请填写所有项',
+      })
+      return;
+    }
+
+    if (this.data.imgUrl.length === 0) {
+      wx.showModal({
+        title: '警告',
+        content: '请添加物品图片',
+      })
+      return;
+    }
+
     const lost = {
       Location: this.data.location,
       Longitude: this.data.longitude,
       Altitude: this.data.latitude,
       Lost_date: this.data.currTime,
       Tel: contact,
-      Type_num: parseInt(this.data.index + '') + 1,
+      Type_num: parseInt(this.data.index + ''),
       User_id: app.globalData.openid,
       note: note,
       state: 0,
@@ -266,9 +289,7 @@ Page({
   },
   bindMultiPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    // this.setData({
-    //   multiIndex: e.detail.value
-    // })
+ 
     let Y = years[e.detail.value[0]].match(/\d/g).join("")
     let M = months[e.detail.value[1]].match(/\d/g).join("")
     let D = days[e.detail.value[2]].match(/\d/g).join("")

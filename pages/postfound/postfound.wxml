@@ -30,7 +30,7 @@
 
     <view class="item">
       <text>联系方式</text>
-      <input name="contact" value='18573129655' />
+      <input name="contact" value='' />
     </view>
 
     <view class="item">
